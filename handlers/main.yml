@@ -1,0 +1,26 @@
+---
+- name: "restart service"
+  systemd:
+    name: "{{ item.key }}"
+    state: restarted
+    daemon_reload: yes
+  when: "item.value.enabled == true"
+  with_dict: "{{ systemd_service }}"
+
+- name: refresh containers
+  block:
+    - name: stop container service
+      service:
+        name: "{{ item.name }}"
+        state: stopped
+
+    - name: remove existing containers
+      shell: "/usr/bin/podman rm {{ item.name }}"
+
+    - name: configure containers
+      shell: "{{ item.create_command }}"
+      args:
+        exec: /bin/bash
+      with_items: "{{ podman_containers }}"
+
+  tags: ['podman', 'containers', ]

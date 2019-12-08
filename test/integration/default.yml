@@ -1,0 +1,5 @@
+---
+- hosts: test-kitchen
+  become: yes
+  roles:
+    - podman
