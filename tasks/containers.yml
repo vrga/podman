@@ -1,0 +1,28 @@
+- name: "check if container is defined {{ item.name }}"
+  command: "/usr/bin/podman container exists {{ item.name }}"
+  register: "container_exists"
+  failed_when: false
+  changed_when: container_exists.rc == 1
+  check_mode: no
+  loop: "{{ containers }}"
+  tags:
+    - podman
+    - containers
+
+- name: "trigger refresh if container {{ item.item.name }} does not exist."
+  include_tasks: refresh_container.yml
+  vars:
+    container_name:         "{{ item.item.name }}"
+    container_image:        "{{ item.item.image }}"
+    container_command:      "{{ item.item.command }}"
+    container_network:      "{{ item.item.network | default('podman') }}"
+    container_exposes:      "{{ item.item.exposes | default([]) }}"
+    container_environment:  "{{ item.item.environment | default([]) }}"
+    container_mounts:       "{{ item.item.mounts | default([]) }}"
+    container_extra_args:   "{{ item.item.extra_args | default('') }}"
+    container_parameters:   "{{ item.item.parameters | default('') }}"
+  when: "item.rc != 0"
+  loop: "{{ container_exists.results }}"
+  tags:
+    - podman
+    - containers

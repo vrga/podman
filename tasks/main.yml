@@ -1,36 +1,41 @@
-- name: install software-properties-common
-  package:
-    name: software-properties-common
-    state: present
-  tags: ['podman', 'install', ]
-
-- name: add ppa
-  apt_repository:
-    repo: ppa:projectatomic/ppa
-    state: present
-  tags: ['podman', 'install', ]
+- name: install on ubuntu
+  include_tasks:
+    file: ./install_ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
 - name: install podman
   package:
     name: podman
     state: present
-  tags: ['podman', 'install', ]
+  tags:
+    - podman
+    - install
 
 - name: set up policy.json
   copy:
     dest: /etc/containers/policy.json
     content: "{{ containers_policy | to_nice_json }}"
-  tags: ['podman', 'configure', ]
+  tags:
+    - podman
+    - configure
 
 - name: set up registries.conf
   template:
     src: templates/registries.conf.j2
     dest: /etc/containers/registries.conf
-  tags: ['podman', 'configure', ]
+  tags:
+    - podman
+    - configure
 
 - name: set up cni networking configs
   copy:
     dest: "/etc/cni/net.d/{{ item.filename }}.conflist"
     content: "{{ item.data | to_nice_json }}"
   with_items: "{{ cni_networking }}"
-  tags: ['podman', 'configure', ]
+  tags:
+    - podman
+    - configure
+
+- import_tasks: ./images.yml
+
+- import_tasks: ./containers.yml

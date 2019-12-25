@@ -1,0 +1,9 @@
+- name: "pull image for {{ item.name }}"
+  podman_image:
+    name: "{{ item.image }}"
+    pull: yes
+    state: present
+  with_items: "{{ containers }}"
+  tags:
+    - podman
+    - images

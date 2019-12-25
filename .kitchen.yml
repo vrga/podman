@@ -2,11 +2,15 @@
 driver:
   name: vagrant
   provider: libvirt
+  customize:
+    memory: 1024
+    cpus: 2
+  cachier: true
 
 provisioner:
   name: ansible_playbook
 #  roles_path:
-  hosts: test-kitchen
+  hosts: test_kitchen
   require_ansible_repo: false
   require_pip: false
   require_ansible_source: true

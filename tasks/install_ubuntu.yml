@@ -1,0 +1,15 @@
+- name: install software-properties-common
+  package:
+    name: software-properties-common
+    state: present
+  tags:
+    - podman
+    - install
+
+- name: add ppa
+  apt_repository:
+    repo: ppa:projectatomic/ppa
+    state: present
+  tags:
+    - podman
+    - install
