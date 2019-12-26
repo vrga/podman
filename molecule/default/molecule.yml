@@ -1,0 +1,33 @@
+---
+scenario:
+  name: default
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+  provider:
+    name: libvirt
+  ssh_connection_options:
+    - '-o ControlPath=~/.ansible/cp/%r@%h-%p'
+lint:
+  name: yamllint
+platforms:
+  - name: ubuntu1604
+    box: generic/ubuntu1604
+    memory: 1024
+    cpus: 2
+    provision: True
+provisioner:
+  name: ansible
+  playbooks:
+    converge: ../playbook.yml
+  lint:
+    name: ansible-lint
+    options:
+      exclude:
+        - venv/
+verifier:
+  name: testinfra
+  directory: ../tests/
+  lint:
+    name: flake8

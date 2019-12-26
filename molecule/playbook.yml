@@ -1,0 +1,19 @@
+---
+- name: Converge
+  hosts: all
+  become: yes
+  roles:
+    - role: podman
+  vars:
+    containers:
+      - name: hello-world
+        image: docker.io/hello-world
+
+      - name: hello-world-2
+        image: docker.io/hello-world
+
+      - name: httpd-test
+        image: docker.io/httpd:2.4.39
+        network: podman
+        exposes:
+          - '8080:80'
