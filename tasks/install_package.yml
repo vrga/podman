@@ -13,3 +13,11 @@
   tags:
     - podman
     - install
+
+- name: install podman
+  package:
+    name: podman
+    state: present
+  tags:
+    - podman
+    - install

@@ -1,6 +1,6 @@
 ---
 scenario:
-  name: default
+  name: install_from_source
 dependency:
   name: galaxy
 driver:
@@ -12,13 +12,13 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: ubuntu1604
-    box: generic/ubuntu1604
-    memory: 1024
-    cpus: 2
-    provision: True
-    instance_raw_config_args:
-      - "vm.provider :libvirt do |libvirt| libvirt.random :model => 'random' end"
+#  - name: ubuntu1604
+#    box: generic/ubuntu1604
+#    memory: 1024
+#    cpus: 2
+#    provision: True
+#    instance_raw_config_args:
+#      - "vm.provider :libvirt do |libvirt| libvirt.random :model => 'random' end"
   - name: ubuntu1804
     box: generic/ubuntu1804
     memory: 1024
@@ -28,8 +28,10 @@ platforms:
       - "vm.provider :libvirt do |libvirt| libvirt.random :model => 'random' end"
 provisioner:
   name: ansible
+  log: true
+  no_log: false
   playbooks:
-    converge: ../playbook.yml
+    converge: ./playbook.yml
   lint:
     name: ansible-lint
     options:

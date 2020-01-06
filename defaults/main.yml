@@ -1,4 +1,11 @@
 ---
+install_from_source: no
+install_podman_version: 'v1.6.4'
+install_podman_git_repo: 'https://github.com/containers/libpod.git'
+install_conmon_git_repo: 'https://github.com/containers/conmon.git'
+install_conmon_version: 'v2.0.8'
+install_containernetworking_plugins_git_repo: 'https://github.com/containernetworking/plugins.git'
+install_containernetworking_plugins_version: 'v0.8.3'
 containers_policy:
   default:
     - type: reject
@@ -37,7 +44,7 @@ cni_networking:
           backend: iptables
 
 containers: []
-# containes example:
+# containers example:
 #containers:
 #  - name: pihole
 #    image: docker.io/pihole/pihole:latest

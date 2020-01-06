@@ -1,16 +1,16 @@
 - name: "stop container {{ container_name }}"
-  command: "/usr/bin/podman stop {{ container_name }}"
+  command: "podman stop {{ container_name }}"
   failed_when: false
   changed_when: false
 
 - name: "remove existing container {{ container_name }}"
-  command: "/usr/bin/podman rm {{ container_name }}"
+  command: "podman rm {{ container_name }}"
   failed_when: false
   changed_when: false
 
 - name: "configure container {{ container_name }}"
   shell: |
-    /usr/bin/podman container create \
+    podman container create \
     --name {{ container_name }} \
     --network {{ container_network }} \
     {% for expose in container_exposes -%}

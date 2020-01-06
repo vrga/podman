@@ -1,0 +1,22 @@
+---
+- name: Converge
+  hosts: all
+  become: yes
+  roles:
+    - role: podman
+  vars:
+    install_from_source: yes
+    install_podman_version: 'v1.6.4'
+    install_conmon_version: 'v2.0.8'
+    containers:
+      - name: hello-world
+        image: docker.io/hello-world
+
+      - name: hello-world-2
+        image: docker.io/hello-world
+
+      - name: httpd-test
+        image: docker.io/httpd:2.4.39
+        network: podman
+        exposes:
+          - '8080:80'

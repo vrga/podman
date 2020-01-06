@@ -1,6 +1,8 @@
 podman
 =========
 
+NOTE: Abandoned for the time being, at least until debian/ubuntu packaging matures on libpod's side.
+
 A simple podman role to allow installation of it on Ubuntu systems from version 16.04 upwards.
 
 Requirements

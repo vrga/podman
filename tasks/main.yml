@@ -1,15 +1,31 @@
 - name: install on ubuntu
   include_tasks:
-    file: ./install_ubuntu.yml
-  when: ansible_distribution == "Ubuntu"
-
-- name: install podman
-  package:
-    name: podman
-    state: present
+    file: ./install_package.yml
+  when: not install_from_source
   tags:
     - podman
     - install
+    - ubuntu
+
+- name: install from source
+  include_tasks:
+    file: ./install_from_source.yml
+  when: install_from_source
+  tags:
+    - podman
+    - install
+    - source
+
+- name: set up /etc/containers
+  file:
+    name: /etc/containers
+    owner: root
+    group: root
+    state: directory
+  become: yes
+  tags:
+    - podman
+    - configure
 
 - name: set up policy.json
   copy:
