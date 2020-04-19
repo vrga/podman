@@ -1,4 +1,15 @@
 ---
+package_source:
+  Debian:
+    key: "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/Debian_{{ ansible_distribution_version }}/Release.key"
+    repo: "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/Debian_{{ ansible_distribution_version }}/"
+  Ubuntu:
+    key: "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_{{ ansible_distribution_version }}/Release.key"
+    repo: "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_{{ ansible_distribution_version }}/"
+
+
+role_data_dir: /etc/containers/ansible_podman
+
 install_from_source: no
 install_podman_version: 'v1.6.4'
 install_podman_git_repo: 'https://github.com/containers/libpod.git'
@@ -49,6 +60,8 @@ containers: []
 #  - name: pihole
 #    image: docker.io/pihole/pihole:latest
 #    network: podman
+#    user: 20001
+#    group: 20001
 #    exposes:
 #      - 10.88.1.1:53:53/tcp
 #      - 10.8.1.1:53:53/udp
@@ -64,3 +77,8 @@ containers: []
 #      - /etc/timezone:/etc/timezone:ro
 #      - /opt/pihole/etc/pihole/:/etc/pihole/
 #      - /opt/pihole/etc/dnsmasq.d/:/etc/dnsmasq.d/
+
+container_storage_root: "/opt/"
+storage_root: "/var/lib/containers/storage/"
+container_dirs: []
+systemd_containers: no

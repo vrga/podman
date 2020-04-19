@@ -13,6 +13,9 @@
     podman container create \
     --name {{ container_name }} \
     --network {{ container_network }} \
+    {% if container_user != "" and container_group != "" -%}
+    --user {{ container_user }}:{{ container_group }} \
+    {% endif -%}
     {% for expose in container_exposes -%}
     -p {{ expose }} \
     {% endfor -%}
@@ -25,3 +28,4 @@
     {{ container_extra_args }} {{ container_image }} {{ container_parameters }}
   args:
     executable: /bin/bash
+

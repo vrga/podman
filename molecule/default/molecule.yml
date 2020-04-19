@@ -12,13 +12,13 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: ubuntu1604
-    box: generic/ubuntu1604
-    memory: 1024
-    cpus: 2
-    provision: True
-    instance_raw_config_args:
-      - "vm.provider :libvirt do |libvirt| libvirt.random :model => 'random' end"
+#  - name: ubuntu1604
+#    box: generic/ubuntu1604
+#    memory: 1024
+#    cpus: 2
+#    provision: True
+#    instance_raw_config_args:
+#      - "vm.provider :libvirt do |libvirt| libvirt.random :model => 'random' end"
   - name: ubuntu1804
     box: generic/ubuntu1804
     memory: 1024

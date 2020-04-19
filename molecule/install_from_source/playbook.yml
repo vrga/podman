@@ -1,22 +1,49 @@
 ---
-- name: Converge
-  hosts: all
+- name:   Converge
+  hosts:  all
   become: yes
   roles:
     - role: podman
   vars:
-    install_from_source: yes
-    install_podman_version: 'v1.6.4'
-    install_conmon_version: 'v2.0.8'
-    containers:
-      - name: hello-world
-        image: docker.io/hello-world
+    install_from_source:                         yes
+    install_podman_version:                      'v1.8.2'
+    install_conmon_version:                      'v2.0.15'
+    install_containernetworking_plugins_version: 'v0.8.5'
+    ansible_user:                                'root'
+    containers: []
 
-      - name: hello-world-2
-        image: docker.io/hello-world
-
-      - name: httpd-test
-        image: docker.io/httpd:2.4.39
-        network: podman
-        exposes:
-          - '8080:80'
+- name:   copy built
+  hosts:  all
+  become: no
+  vars:
+    ansible_user:                                'root'
+  tasks:
+    - file:
+        state: directory
+        path:  '{{ playbook_dir }}/{{ item }}'
+      with_items:
+        - build
+        - build/cni_plugins
+      delegate_to: 'localhost'
+    - synchronize:
+        mode:       pull
+        src:        '/home/{{ ansible_user }}/containernetworking_plugins/bin'
+        dest:       '{{ playbook_dir }}/build/cni_plugins'
+    - synchronize:
+        mode: pull
+        src:        '/usr/local/bin/{{ item }}'
+        dest:       '{{ playbook_dir }}/build/'
+      with_items:
+        - conmon
+        - podman
+#      - name: hello-world
+#        image: docker.io/hello-world
+#
+#      - name: hello-world-2
+#        image: docker.io/hello-world
+#
+#      - name: httpd-test
+#        image: docker.io/httpd:2.4.39
+#        network: podman
+#        exposes:
+#          - '8080:80'

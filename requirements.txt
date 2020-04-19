@@ -3,3 +3,4 @@ molecule==2.20.1
 # molecule[vagrant]
 python-vagrant
 testinfra==3.3.0
+docker==4.2.0

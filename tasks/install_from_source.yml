@@ -1,9 +1,16 @@
+- name: add golang ppa
+  apt_repository:
+    repo: 'ppa:longsleep/golang-backports'
+    state: present
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "16.04"
+
 - apt:
     update_cache: yes
     cache_valid_time: 86400 #One day
   tags:
     - podman
     - install
+
 
 - name: install common build-time dependencies
   block:
@@ -23,14 +30,15 @@
         - libglib2.0-dev
         - libgpg-error-dev
         - libprotobuf-dev
-        - libprotobuf-c0-dev
+#        - libprotobuf-c0-dev
+        - libprotobuf-c1-dev
         - libseccomp-dev
         - libselinux1-dev
         - libsystemd-dev
         - pkg-config
         - runc
         - uidmap
-      when: ansible_distribution == "Ubuntu"
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
     - package:
         name: '{{ item }}'
         state: present
@@ -41,6 +49,7 @@
         name: '{{ item }}'
         state: present
       with_items:
+        - libbtrfs-dev
         - libgpgme-dev
       when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "18.04"
   tags:
