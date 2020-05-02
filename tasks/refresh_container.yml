@@ -1,31 +1,31 @@
-- name: "stop container {{ container_name }}"
-  command: "podman stop {{ container_name }}"
-  failed_when: false
+---
+- name:         "stop container {{ container_name }}"
+  command:      "podman stop {{ container_name }}"
+  failed_when:  false
   changed_when: false
 
-- name: "remove existing container {{ container_name }}"
-  command: "podman rm {{ container_name }}"
-  failed_when: false
+- name:         "remove existing container {{ container_name }}"
+  command:      "podman rm {{ container_name }}"
+  failed_when:  false
   changed_when: false
 
-- name: "configure container {{ container_name }}"
+- name:  "configure container {{ container_name }}" # noqa 301
   shell: |
-    podman container create \
-    --name {{ container_name }} \
-    --network {{ container_network }} \
-    {% if container_user != "" and container_group != "" -%}
-    --user {{ container_user }}:{{ container_group }} \
-    {% endif -%}
-    {% for expose in container_exposes -%}
-    -p {{ expose }} \
-    {% endfor -%}
-    {% for envvar in container_environment -%}
-    -e {{ envvar }} \
-    {% endfor -%}
-    {% for mount in container_mounts -%}
-    -v {{ mount }} \
-    {% endfor -%}
-    {{ container_extra_args }} {{ container_image }} {{ container_parameters }}
+         podman container create \
+         --name {{ container_name }} \
+         --network {{ container_network }} \
+         {% if container_user != "" and container_group != "" -%} # noqa 602
+         --user {{ container_user }}:{{ container_group }} \
+         {% endif -%}
+         {% for expose in container_exposes -%}
+         -p {{ expose }} \
+         {% endfor -%}
+         {% for envvar in container_environment -%}
+         -e {{ envvar }} \
+         {% endfor -%}
+         {% for mount in container_mounts -%}
+         -v {{ mount }} \
+         {% endfor -%}
+         {{ container_extra_args }} {{ container_image }} {{ container_parameters }}
   args:
     executable: /bin/bash
-

@@ -1,4 +1,0 @@
----
-- name: "refresh containers"
-  include_tasks:
-    file: ../tasks/refresh_container.yml

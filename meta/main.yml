@@ -1,7 +1,8 @@
+---
 galaxy_info:
-  author: Fran Pavelić
-  description: A simple podman role to allow installation of it on Ubuntu systems from version 16.04 upwards.
-  license: BSD-3-Clause
+  author:              Fran Pavelić
+  description:         A simple podman role to allow installation of it on Ubuntu systems from version 16.04 upwards.
+  license:             BSD-3-Clause
   min_ansible_version: 2.8
   platforms:
     - name: Ubuntu

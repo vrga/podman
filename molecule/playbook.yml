@@ -1,64 +1,80 @@
 ---
-#- name: Converge
-#  hosts: all
-#  become: yes
-#  roles:
-#    - role: podman
-#  vars:
-#    container_dirs:
-#      - user: root
-#        group: root
-#        path: /opt/create-me-harder/now
-#    containers:
-#      - name: hello-world
-#        image: docker.io/hello-world
-#
-#      - name: hello-world-2
-#        image: docker.io/hello-world
-#
-#      - name: httpd-test
-#        image: docker.io/httpd:2.4.39
-#        network: podman
-#        exposes:
-#          - '8080:80'
-#
-#      - name: httpd-test-mounts
-#        image:   docker.io/httpd:2.4.39
-#        network: podman
-#        exposes:
-#          - '8080:80'
-#        mounts:
-#          - /opt/create-me-harder/now:/opt
-
-- name: change register
-  hosts: all
+- name:   Converge
+  hosts:  all
   become: yes
   roles:
     - role: podman
   vars:
     registries:
-      search: []
+      search:
+        - 192.168.121.1:3128
+      #    - docker.io
       insecure:
+        - 192.168.121.1:3128
         - docker.io
       block: []
+      #    - docker.io
+    proxy_env:
+      http_proxy:  '192.168.121.1:3128'
+      https_proxy: '192.168.121.1:3128'
+    container_dirs:
+      - user:  root
+        group: root
+        path:  /opt/create-me-harder/now
+    containers:
+      - name:  hello-world
+        image: docker.io/hello-world
+
+      - name:  hello-world-2
+        image: docker.io/hello-world
+
+      - name:    httpd-test
+        image:   docker.io/httpd:2.4.39
+        network: podman
+        exposes:
+          - '8080:80'
+
+      - name:    httpd-test-mounts
+        image:   docker.io/httpd:2.4.39
+        network: podman
+        exposes:
+          - '8080:80'
+        mounts:
+          - /opt/create-me-harder/now:/opt
+
+- name:   change register
+  hosts:  all
+  become: yes
+  roles:
+    - role: podman
+  vars:
+    registries:
+      search:
+        - 192.168.121.1:3128
+      #    - docker.io
+      insecure:
+        - 192.168.121.1:3128
+        - docker.io
+      block: []
+      #    - docker.io
 
     proxy_env:
       http_proxy:  '192.168.121.1:3128'
       https_proxy: '192.168.121.1:3128'
     systemd_containers: yes
     containers:
-      - name: hello-world-sd1
+      - name:    hello-world-sd1
         enabled: no
-        image: docker.io/hello-world
+        image:   docker.io/hello-world
 
-      - name: hello-world-sd2
+      - name:    hello-world-sd2
         enabled: no
-        image: docker.io/hello-world
+        image:   docker.io/hello-world
 
-      - name: httpd-test-sd1
+      - name:    httpd-test-sd1
         enabled: yes
         running: yes
-        image: docker.io/httpd:2.4.39
+        image:   docker.io/httpd:2.4.39
         network: podman
         exposes:
           - '8090:80'

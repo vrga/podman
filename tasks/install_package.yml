@@ -1,3 +1,4 @@
+---
 - name: install software-properties-common
   package:
     name:  software-properties-common
@@ -6,15 +7,19 @@
     - podman
     - install
 
-- name: add source debian
-  block:
-    - copy:
-        dest:    "/etc/apt/sources.list.d/devel-kubic-libcontainers-stable.list"
-        content: |
+- name: add apt source
+  copy:
+    dest:    "/etc/apt/sources.list.d/devel-kubic-libcontainers-stable.list"
+    content: |
              deb {{ package_source[ansible_distribution]['repo'] }} /
-    - apt_key:
-        url:   "{{ package_source[ansible_distribution]['key'] }}"
-        state: present
+  tags:
+    - podman
+    - install
+
+- name: add apt key
+  apt_key:
+    url:   "{{ package_source[ansible_distribution]['key'] }}"
+    state: present
   tags:
     - podman
     - install

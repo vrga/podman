@@ -1,3 +1,4 @@
+---
 - name:         "check if container is defined {{ item.name }}"
   command:      "podman container exists {{ item.name }}"
   register:     "container_exists"
@@ -12,18 +13,18 @@
 - name:          "trigger refresh if container does not exist or config changed."
   include_tasks: refresh_container.yml
   vars:
-    container_name:         "{{ item.name }}"
-    container_image:        "{{ item.image }}"
-    container_user:         "{{ item.user | default('') }}"
-    container_group:        "{{ item.group | default('') }}"
-    container_command:      "{{ item.command }}"
-    container_network:      "{{ item.network | default('podman') }}"
-    container_exposes:      "{{ item.exposes | default([]) }}"
-    container_environment:  "{{ item.environment | default([]) }}"
-    container_mounts:       "{{ item.mounts | default([]) }}"
-    container_extra_args:   "{{ item.extra_args | default('') }}"
-    container_parameters:   "{{ item.parameters | default('') }}"
-  when:          "item.get('do_not_modify', False) == False and (container_exists.results[index].rc != 0 or _container_config.results[index].changed == True)"
+    container_name:        "{{ item.name }}"
+    container_image:       "{{ item.image }}"
+    container_user:        "{{ item.user | default('') }}"
+    container_group:       "{{ item.group | default('') }}"
+    container_command:     "{{ item.command }}"
+    container_network:     "{{ item.network | default('podman') }}"
+    container_exposes:     "{{ item.exposes | default([]) }}"
+    container_environment: "{{ item.environment | default([]) }}"
+    container_mounts:      "{{ item.mounts | default([]) }}"
+    container_extra_args:  "{{ item.extra_args | default('') }}"
+    container_parameters:  "{{ item.parameters | default('') }}"
+  when:          "not item.get('do_not_modify', False) and (container_exists.results[index].rc != 0 or _container_config.results[index].changed)"
   loop:          "{{ containers }}"
   loop_control:
     index_var: index

@@ -2,8 +2,6 @@ import os
 
 import testinfra.utils.ansible_runner
 from testinfra.host import Host
-from requests import get
-from pprint import pprint
 
 testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']
@@ -11,7 +9,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 
 def test_package_installed(host: Host):
-    podman = host.run_expect([0], 'whereis podman')
+    host.run_expect([0], 'whereis podman')
 
 
 def test_container_basics(host: Host):
