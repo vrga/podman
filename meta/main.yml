@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author:              Fran Pavelić
-  description:         A simple podman role to allow installation of it on Ubuntu systems from version 16.04 upwards.
+  description:         A simple podman role to allow installation of it on Ubuntu systems from version 16.04 upwards and Debian 10 (Buster) up.
   license:             BSD-3-Clause
   min_ansible_version: 2.8
   platforms:
@@ -9,7 +9,11 @@ galaxy_info:
       versions:
         - xenial
         - bionic
+    - name: Debian
+      versions:
+        - buster
   galaxy_tags:
     - podman
     - ubuntu
+    - debian
 dependencies: []

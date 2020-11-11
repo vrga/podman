@@ -1,9 +1,7 @@
 podman
 =========
 
-NOTE: Abandoned for the time being, at least until debian/ubuntu packaging matures on libpod's side.
-
-A simple podman role to allow installation of it on Ubuntu systems from version 16.04 upwards.
+A simple podman role to allow installation of it on Ubuntu systems from version 16.04 upwards, also Debian 10 (buster).
 
 Requirements
 ------------
@@ -58,29 +56,6 @@ cni_networking:
           portMappings: true
       - type: firewall
         backend: iptables
-```
-
-Containers
-```
-containers:
-  - name: pihole
-    image: docker.io/pihole/pihole:latest
-    network: podman
-    exposes:
-      - 10.88.1.1:53:53/tcp
-      - 10.8.1.1:53:53/udp
-      - 10.88.1.1:8091:80
-      - 10.88.1.1:8092:443
-    container_environment:
-      - ServerIP="10.88.1.1"
-      - DNS1="1.1.1.1"
-      - DNS2="8.8.8.8"
-      - VIRTUAL_HOST="pihole.testing.lan"
-    mounts:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
-      - /opt/pihole/etc/pihole/:/etc/pihole/
-      - /opt/pihole/etc/dnsmasq.d/:/etc/dnsmasq.d/
 ```
 
 Example Playbook
