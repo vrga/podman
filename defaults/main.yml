@@ -24,6 +24,11 @@ registries:
   insecure: [ ]
   block: [ ]
 
+registries_toml: []
+#registries_toml:
+#  - prefix: docker.io
+#  - prefix: k8s.gcr.io
+
 cni_networking:
   - filename: 87-podman-bridge
     data:
