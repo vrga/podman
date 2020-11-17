@@ -33,7 +33,7 @@
     - podman
     - configure
 
-- name: set up registries.conf -v2
+- name: set up registries.conf - v2
   template:
     src:  templates/registries.toml.j2
     dest: /etc/containers/registries.conf
