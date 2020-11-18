@@ -1,16 +1,16 @@
-{{ ansible_managed }}
+# {{ ansible_managed }}
 unqualified-search-registries = {{ registries_toml | json_query('[].prefix')  | list | to_json }}
 
 {% for registry in registries_toml %}
 [[registry]]
     prefix = "{{ registry.prefix }}"
-    insecure = "{{ registry.insecure | default('false') }}"
-    blocked = "{{ registry.blocked | default('false') }}"
-{% if 'location' in registry %}    location = "{{ registry.location }}"{% endif %}
+    insecure = {{ registry.insecure | default('false') }}
+    blocked = {{ registry.blocked | default('false') }}
+    location = "{{ registry.location | default(registry.prefix) }}"
 {% if 'mirror' in registry %}{% for mirror in registry.mirror %}
 [[registry.mirror]]
-    location = "{{ mirror.location }}
-    insecure = "{{ mirror.insecure | default('false') }}"
-    blocked = "{{ mirror.blocked | default('false') }}"
+    location = "{{ mirror.location }}"
+    insecure = {{ mirror.insecure | default('false') }}
+    blocked = {{ mirror.blocked | default('false') }}
 {% endfor %}{% endif %}
 {% endfor %}
