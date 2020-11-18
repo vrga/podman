@@ -54,3 +54,6 @@ cni_networking:
         - type: tuning
 
 storage_root:  "/var/lib/containers/storage/"
+
+install_buildah: false
+install_skopeo: false

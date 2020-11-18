@@ -34,7 +34,25 @@
 - name: install podman
   package:
     name:  podman
-    state: present
+    state: latest
+  tags:
+    - podman
+    - install
+
+- name: install buildah
+  package:
+    name:  buildah
+    state: latest
+  when: install_buildah
+  tags:
+    - podman
+    - install
+
+- name: install skopeo
+  package:
+    name:  skopeo
+    state: latest
+  when: install_skopeo
   tags:
     - podman
     - install

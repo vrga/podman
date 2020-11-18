@@ -13,3 +13,4 @@ unqualified-search-registries = {{ registries_toml | json_query('[].prefix')  | 
     insecure = "{{ mirror.insecure | default('false') }}"
     blocked = "{{ mirror.blocked | default('false') }}"
 {% endfor %}{% endif %}
+{% endfor %}
