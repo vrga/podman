@@ -31,6 +31,16 @@
     - podman
     - install
 
+- name: install libseccomp from backports
+  apt:
+    state: latest
+    name: libseccomp2
+    default_release: buster-backports
+  when: ansible_distribution == "Debian" and ansible_distribution_release == "buster"
+  tags:
+    - podman
+    - install
+
 - name: install podman
   package:
     name:  podman

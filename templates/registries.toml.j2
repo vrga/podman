@@ -4,13 +4,13 @@ unqualified-search-registries = {{ registries_toml | json_query('[].prefix')  | 
 {% for registry in registries_toml %}
 [[registry]]
     prefix = "{{ registry.prefix }}"
-    insecure = {{ registry.insecure | default('false') }}
-    blocked = {{ registry.blocked | default('false') }}
+    insecure = {{ 'true' if registry.insecure | default(False) else 'false'  }}
+    blocked = {{ 'true' if registry.blocked | default(False) else 'false' }}
     location = "{{ registry.location | default(registry.prefix) }}"
 {% if 'mirror' in registry %}{% for mirror in registry.mirror %}
 [[registry.mirror]]
     location = "{{ mirror.location }}"
-    insecure = {{ mirror.insecure | default('false') }}
-    blocked = {{ mirror.blocked | default('false') }}
+    insecure = {{ 'true' if mirror.insecure | default(False) else 'false' }}
+    blocked = {{ 'true' if mirror.blocked | default(False) else 'false' }}
 {% endfor %}{% endif %}
 {% endfor %}

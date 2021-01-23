@@ -55,6 +55,15 @@
     - podman
     - configure
 
+- name: set up containers.conf
+  template:
+    src:  templates/containers.conf.j2
+    dest: /etc/containers/containers.conf
+  tags:
+    - podman
+    - configure
+
+
 - name:       set up cni networking configs
   copy:
     dest:    "/etc/cni/net.d/{{ item.filename }}.conflist"
