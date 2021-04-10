@@ -46,6 +46,9 @@
   fail:
     msg: "Set either V1 or V2 config."
   when: registries and registries_toml
+  tags:
+    - podman
+    - configure
 
 - name: set up storage.conf
   template:
@@ -79,3 +82,6 @@
     owner: root
     group: root
     state: directory
+  tags:
+    - podman
+    - configure

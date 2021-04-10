@@ -6,7 +6,7 @@
 [storage]
 
 # Default Storage Driver, Must be set for proper operation.
-driver = "overlay"
+driver = "{{ storage_driver | default('overlay') }}"
 
 # Temporary storage location
 runroot = "/run/containers/storage"
@@ -140,6 +140,9 @@ mountopt = "nodev,metacopy=on"
 # directlvm_device specifies a custom block storage device to use for the
 # thin pool. Required if you setup devicemapper.
 # directlvm_device = ""
+{% if storage_driver == 'devmapper' %}
+directlvm_device = "{{ storage_directlvm_device }}"
+{% endif %}
 
 # directlvm_device_force wipes device even if device already has a filesystem.
 # directlvm_device_force = "True"

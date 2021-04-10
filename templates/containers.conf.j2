@@ -79,7 +79,7 @@ default_capabilities = [
 # for example:"net.ipv4.ping_group_range = 0 0".
 #
 default_sysctls = [
-"net.ipv4.ping_group_range=0 0",
+{#"net.ipv4.ping_group_range=0 0",#}
 ]
 
 # A list of ulimits to be set in containers by default, specified as
@@ -392,6 +392,7 @@ detach_keys = "ctrl-e,ctrl-e"
 # Default OCI runtime
 #
 # runtime = "crun"
+runtime = "runc"
 
 # List of the OCI runtimes that support --format=json.  When json is supported
 # engine will use it for reporting nicer errors.
@@ -437,15 +438,15 @@ detach_keys = "ctrl-e,ctrl-e"
 #            "/run/current-system/sw/bin/crun",
 # ]
 
-# runc = [
-#        "/usr/bin/runc",
+runc = [
+#       "/usr/bin/runc",
 #        "/usr/sbin/runc",
-#        "/usr/local/bin/runc",
+         "/usr/local/bin/runc",
 #        "/usr/local/sbin/runc",
 #        "/sbin/runc",
 #        "/bin/runc",
 #        "/usr/lib/cri-o-runc/sbin/runc",
-# ]
+ ]
 
 # kata = [
 #            "/usr/bin/kata-runtime",
