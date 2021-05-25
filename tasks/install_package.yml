@@ -43,7 +43,9 @@
 
 - name: install podman
   package:
-    name:  podman
+    name:
+      - podman
+      - cri-o-runc
     state: latest
   tags:
     - podman

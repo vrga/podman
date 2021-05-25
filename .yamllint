@@ -9,3 +9,9 @@ rules:
     level: error
   line-length: disable
   truthy: disable
+  colons: disable
+  comments: disable
+  new-line-at-end-of-file: disable
+
+ignore: |
+  venv/

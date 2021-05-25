@@ -24,7 +24,7 @@ registries:
   insecure: [ ]
   block: [ ]
 
-registries_toml: []
+registries_toml: [ ]
 #registries_toml:
 #  - prefix: docker.io
 #  - prefix: k8s.gcr.io
@@ -53,7 +53,7 @@ cni_networking:
         - type: firewall
         - type: tuning
 
-storage_root:  "/var/lib/containers/storage/"
-storage_driver: overlay
+storage_root:    "/var/lib/containers/storage/"
+storage_driver:  overlay
 install_buildah: false
-install_skopeo: false
+install_skopeo:  false
