@@ -182,7 +182,7 @@ default_sysctls = [
 
 # Maximum number of processes allowed in a container.
 #
-# pids_limit = 2048
+pids_limit = 8192
 
 # Default way to to create a PID namespace for the container
 # Options are:
@@ -201,7 +201,7 @@ default_sysctls = [
 # b (bytes), k (kilobytes), m (megabytes), or g (gigabytes).
 # If the unit is omitted, the system uses bytes.
 #
-# shm_size = "65536k"
+shm_size = "128m"
 
 # Set timezone in container. Takes IANA timezones as well as "local",
 # which sets the timezone in the container to match the host machine.
@@ -361,7 +361,7 @@ detach_keys = "ctrl-e,ctrl-e"
 # If this is changed, a lock renumber must be performed (e.g. with the
 # 'podman system renumber' command).
 #
-# num_locks = 2048
+num_locks = 16384
 
 # Whether to pull new image before running a container
 # pull_policy = "missing"
