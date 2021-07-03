@@ -57,3 +57,7 @@ storage_root:    "/var/lib/containers/storage/"
 storage_driver:  overlay
 install_buildah: false
 install_skopeo:  false
+
+container_runtime: crun
+container_runtime_paths:
+  - /usr/bin/crun

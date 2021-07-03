@@ -361,7 +361,7 @@ detach_keys = "ctrl-e,ctrl-e"
 # If this is changed, a lock renumber must be performed (e.g. with the
 # 'podman system renumber' command).
 #
-num_locks = 16384
+num_locks = 2048
 
 # Whether to pull new image before running a container
 # pull_policy = "missing"
@@ -392,7 +392,7 @@ num_locks = 16384
 # Default OCI runtime
 #
 # runtime = "crun"
-runtime = "runc"
+runtime = "{{ container_runtime }}"
 
 # List of the OCI runtimes that support --format=json.  When json is supported
 # engine will use it for reporting nicer errors.
@@ -438,15 +438,15 @@ runtime = "runc"
 #            "/run/current-system/sw/bin/crun",
 # ]
 
-runc = [
+#runc = [
 #       "/usr/bin/runc",
 #        "/usr/sbin/runc",
 #        "/usr/local/bin/runc",
 #        "/usr/local/sbin/runc",
 #        "/sbin/runc",
 #        "/bin/runc",
-        "/usr/lib/cri-o-runc/sbin/runc",
- ]
+#        "/usr/lib/cri-o-runc/sbin/runc",
+# ]
 
 # kata = [
 #            "/usr/bin/kata-runtime",
@@ -458,6 +458,7 @@ runc = [
 #            "/usr/bin/kata-qemu",
 #            "/usr/bin/kata-fc",
 # ]
+  {{ container_runtime }} = [{{ container_runtime_paths | map('to_json') | join(',') }}]
 
 [engine.volume_plugins]
 # testplugin = "/run/podman/plugins/test.sock"
