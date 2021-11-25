@@ -1,3 +1,4 @@
+---
 extends: default
 
 rules:
@@ -11,7 +12,7 @@ rules:
   truthy: disable
   colons: disable
   comments: disable
-  new-line-at-end-of-file: disable
+  new-line-at-end-of-file: enable
 
 ignore: |
   venv/

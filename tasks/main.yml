@@ -1,6 +1,6 @@
 ---
 - name: install podman
-  include_tasks: install_package.yml
+  include_tasks: install.yml
   tags:
     - podman
     - install
@@ -24,28 +24,10 @@
     - podman
     - configure
 
-- name: set up registries.conf - v1
-  template:
-    src:  templates/registries.conf.j2
-    dest: /etc/containers/registries.conf
-  when: registries and not registries_toml
-  tags:
-    - podman
-    - configure
-
-- name: set up registries.conf - v2
+- name: set up registries.conf
   template:
     src:  templates/registries.toml.j2
     dest: /etc/containers/registries.conf
-  when:  registries_toml and not registries
-  tags:
-    - podman
-    - configure
-
-- name: fail when both registries and registries_toml are not empty
-  fail:
-    msg: "Set either V1 or V2 config."
-  when: registries and registries_toml
   tags:
     - podman
     - configure
@@ -65,7 +47,6 @@
   tags:
     - podman
     - configure
-
 
 - name:       set up cni networking configs
   copy:

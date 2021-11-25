@@ -3,9 +3,6 @@ package_source:
   Debian:
     key:  "http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/Debian_{{ ansible_distribution_version }}/Release.key"
     repo: "http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/Debian_{{ ansible_distribution_version }}/"
-  Ubuntu:
-    key:  "http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_{{ ansible_distribution_version }}/Release.key"
-    repo: "http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_{{ ansible_distribution_version }}/"
 
 containers_policy:
   default:
@@ -17,17 +14,11 @@ containers_policy:
       docker.io:
         - type: insecureAcceptAnything
 
-registries:
-  search:
-    - docker.io
-    - k8s.gcr.io
-  insecure: [ ]
-  block: [ ]
+registries_short_name_mode: enforcing
 
-registries_toml: [ ]
-#registries_toml:
-#  - prefix: docker.io
-#  - prefix: k8s.gcr.io
+registries:
+  - prefix: docker.io
+  - prefix: k8s.gcr.io
 
 cni_networking:
   - filename: 87-podman-bridge

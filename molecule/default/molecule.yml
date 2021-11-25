@@ -13,10 +13,17 @@ lint: |
       set -e
       yamllint .
 platforms:
+  - name: debian11
+    box:       debian/bullseye64
+    memory:    2048
+    cpus:      4
+    provision: True
+    instance_raw_config_args:
+      - "vm.provider :libvirt do |libvirt| libvirt.random :model => 'random' end"
   - name:      debian10
     box:       debian/buster64
-    memory:    1024
-    cpus:      2
+    memory:    2048
+    cpus:      4
     provision: True
     instance_raw_config_args:
       - "vm.provider :libvirt do |libvirt| libvirt.random :model => 'random' end"

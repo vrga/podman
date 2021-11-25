@@ -11,8 +11,5 @@
         state: present
   vars:
     registries:
-      search:
-        - docker.io
-      insecure:
-        - docker.io
-      block: []
+      - prefix: docker.io
+      - prefix: k8s.gcr.io

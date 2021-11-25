@@ -1,0 +1,59 @@
+---
+- name: refresh apt
+  apt:
+    update_cache: true
+    cache_valid_time: 3600
+  tags:
+    - podman
+    - install
+
+- name: include distro-specific tasks
+  include_tasks:
+    file: "{{ item }}"
+  loop: "{{ query('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "install_{{ ansible_distribution | lower }}.yml"
+      paths: []
+      skip: yes
+
+- name: include distro-release-specific tasks
+  include_tasks:
+    file: "{{ item }}"
+  loop: "{{ query('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "install_{{ ansible_distribution | lower }}_{{ ansible_distribution_release | lower }}.yml"
+      paths: []
+      skip: yes
+
+
+
+- name: install podman
+  package:
+    name:
+      - podman
+    state: latest
+  tags:
+    - podman
+    - install
+
+- name: install buildah
+  package:
+    name:  buildah
+    state: latest
+  when: install_buildah
+  tags:
+    - podman
+    - install
+
+- name: install skopeo
+  package:
+    name:  skopeo
+    state: latest
+  when: install_skopeo
+  tags:
+    - podman
+    - install
