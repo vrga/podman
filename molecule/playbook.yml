@@ -9,7 +9,3 @@
       package:
         name: curl
         state: present
-  vars:
-    registries:
-      - prefix: docker.io
-      - prefix: k8s.gcr.io
