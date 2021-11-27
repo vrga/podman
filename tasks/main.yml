@@ -41,7 +41,7 @@
 - name: set up storage.conf
   copy:
     dest: /etc/containers/storage.conf
-    content: "{{ container_storage_conf | to_toml }}"
+    content: "{{ container_storage_conf | default(container_storage_conf_default) | to_toml }}"
     owner: root
     group: root
     mode:  '0644'
@@ -52,7 +52,7 @@
 - name: set up containers.conf
   copy:
     dest: /etc/containers/containers.conf
-    content: "{{ containers_conf | to_toml }}"
+    content: "{{ containers_conf | default(containers_conf_default) | to_toml }}"
     owner: root
     group: root
     mode:  '0644'

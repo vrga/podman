@@ -56,7 +56,8 @@ container_runtime:          crun
 container_runtime_paths:
   - /usr/bin/crun
 
-container_storage_conf:
+# container_storage_conf: ~ # override this and combine with defaults.
+container_storage_conf_default:
   storage:
     # Default Storage Driver, Must be set for proper operation.
     driver:    "{{ storage_driver | default('overlay') }}"
@@ -238,7 +239,8 @@ container_storage_conf:
       # underlying storage device.
       # xfs_nospace_max_retries: "0"
 
-containers_conf:
+#containers_conf_default: ~ # override this and combine with defaults.
+containers_conf_default:
   # The containers configuration file specifies all of the available configuration
   # command-line options/flags for container engine tools like Podman & Buildah,
   # but in a TOML format that can be easily modified and versioned.
