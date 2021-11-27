@@ -20,30 +20,42 @@
   copy:
     dest:    /etc/containers/policy.json
     content: "{{ containers_policy | to_nice_json }}"
+    owner: root
+    group: root
+    mode:  '0644'
   tags:
     - podman
     - configure
 
 - name: set up registries.conf
-  template:
-    src:  templates/registries.toml.j2
+  copy:
     dest: /etc/containers/registries.conf
+    content: "{{ _registries | to_toml }}"
+    owner: root
+    group: root
+    mode: '0644'
   tags:
     - podman
     - configure
 
 - name: set up storage.conf
-  template:
-    src:  templates/storage.conf.j2
+  copy:
     dest: /etc/containers/storage.conf
+    content: "{{ container_storage_conf | to_toml }}"
+    owner: root
+    group: root
+    mode:  '0644'
   tags:
     - podman
     - configure
 
 - name: set up containers.conf
-  template:
-    src:  templates/containers.conf.j2
+  copy:
     dest: /etc/containers/containers.conf
+    content: "{{ containers_conf | to_toml }}"
+    owner: root
+    group: root
+    mode:  '0644'
   tags:
     - podman
     - configure
@@ -52,6 +64,9 @@
   copy:
     dest:    "/etc/cni/net.d/{{ item.filename }}.conflist"
     content: "{{ item.data | to_nice_json }}"
+    owner: root
+    group: root
+    mode:  '0644'
   with_items: "{{ cni_networking }}"
   tags:
     - podman

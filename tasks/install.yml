@@ -29,8 +29,6 @@
       paths: []
       skip: yes
 
-
-
 - name: install podman
   package:
     name:

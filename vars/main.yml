@@ -1,0 +1,5 @@
+---
+_registries:
+  unqualified-search-registries: "{{ search_registries | default(registries | json_query('[].prefix') | list) }}"
+  short-name-mode:               "{{ registries_short_name_mode }}"
+  registry:                      "{{ registries }}"
