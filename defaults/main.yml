@@ -14,6 +14,7 @@ containers_policy:
       docker.io:
         - type: insecureAcceptAnything
 
+use_nftables: false
 
 registry_credential_helpers:
   - containers-auth.json
@@ -23,7 +24,9 @@ registries:
   - prefix: docker.io
   - prefix: k8s.gcr.io
 
-cni_networking:
+cni_networking: "{{ use_nftables | ternary(cni_networking_nftables, cni_networking_iptables) }}"
+
+cni_networking_iptables:
   - filename: 87-podman-bridge
     data:
       cniVersion: 0.4.0
@@ -32,7 +35,7 @@ cni_networking:
         - type:        bridge
           bridge:      cni-podman0
           isGateway:   true
-          ipMasq:      true
+          ipMasq:      false
           hairpinMode: true
           ipam:
             type: host-local
@@ -46,6 +49,33 @@ cni_networking:
             portMappings: true
         - type: firewall
         - type: tuning
+
+
+cni_networking_nftables:
+  - filename: 87-podman-bridge
+    data:
+      cniVersion: 0.4.0
+      name:       podman
+      plugins:
+        - type:        bridge
+          bridge:      cni-podman0
+          isGateway:   true
+          ipMasq:      false
+          hairpinMode: true
+          ipam:
+            type: host-local
+            routes:
+              - dst: 0.0.0.0/0
+            ranges:
+              - - subnet:  10.88.0.0/16
+                  gateway: 10.88.0.1
+        - type: cni-nftables-portmap
+          capabilities:
+            portMappings: true
+        - type: cni-nftables-firewall
+          forward_chain_name: forward
+        - type: tuning
+
 
 storage_root:               "/var/lib/containers/storage/"
 storage_driver:             overlay
@@ -478,8 +508,10 @@ containers_conf_default:
 
     # Path to directory where CNI plugin binaries are located.
     #
-    # cni_plugin_dirs:
-    #   - "/usr/lib/cni/"
+    cni_plugin_dirs:
+      - "/usr/lib/cni"
+      - "/usr/local/lib/cni"
+      - "/opt/cni/bin"
 
     # Path to the directory where CNI configuration files are located.
     #

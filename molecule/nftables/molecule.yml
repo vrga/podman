@@ -1,0 +1,51 @@
+---
+scenario:
+  name: nftables
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+  provider:
+    name: libvirt
+  ssh_connection_options:
+    - '-o ControlPath=~/.ansible/cp/%r@%h-%p'
+lint: |
+      set -e
+      yamllint .
+platforms:
+  - name: debian11
+    groups:
+      - nftables
+    box:       debian/bullseye64
+    memory:    2048
+    cpus:      4
+    provision: True
+    instance_raw_config_args:
+      - "vm.provider :libvirt do |libvirt| libvirt.random :model => 'random' end"
+#  - name:      debian10
+#    groups:
+#      - nftables
+#    box:       debian/buster64
+#    memory:    2048
+#    cpus:      4
+#    provision: True
+#    instance_raw_config_args:
+#      - "vm.provider :libvirt do |libvirt| libvirt.random :model => 'random' end"
+provisioner:
+  name: ansible
+  inventory:
+    group_vars:
+      nftables:
+        use_nftables: yes
+  playbooks:
+    converge: ../playbook.yml
+  lint:
+    name: ansible-lint
+    options:
+      exclude:
+        - venv/
+verifier:
+  name:      testinfra
+  directory: ../tests/
+  lint:
+    name: flake8

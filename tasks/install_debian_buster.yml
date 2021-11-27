@@ -43,6 +43,16 @@
     - podman
     - install
 
+- name: install nftables from backports
+  apt:
+    state:           latest
+    name:            nftables
+    default_release: buster-backports
+  when: use_nftables
+  tags:
+    - podman
+    - install
+
 - name: install cri-o-runc
   package:
     name:

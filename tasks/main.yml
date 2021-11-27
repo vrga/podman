@@ -5,6 +5,13 @@
     - podman
     - install
 
+- name: install nftables when enabled
+  include_tasks: install_cni_nftables_plugins.yml
+  when: use_nftables
+  tags:
+    - podman
+    - install
+
 - name:   set up /etc/containers
   file:
     name:  /etc/containers

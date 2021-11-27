@@ -7,5 +7,5 @@
   tasks:
     - name: install curl
       package:
-        name: curl
+        name:  curl
         state: present

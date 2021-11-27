@@ -1,0 +1,36 @@
+---
+- name: ensure nftables is installed
+  package:
+    name: nftables
+    state: latest
+
+- name: ensure nftables is started
+  service:
+    name: nftables
+    state: started
+    enabled: yes
+
+- name: set localhost routable
+  ansible.posix.sysctl:
+    name: net.ipv4.conf.all.route_localnet
+    value: '1'
+    reload: yes
+    sysctl_set: yes
+
+- name: create local cni path
+  file:
+    path: /usr/local/lib/cni
+    state: directory
+
+- name: copy cni plugins
+  copy:
+    src: "/home/vrga/projects/nftables-cni-plugins/bin/{{ item.src }}"
+    dest: "/usr/local/lib/cni/{{ item.dst }}"
+    mode: '0755'
+    owner: root
+    group: root
+  loop:
+    - src: cni-nftables-firewall.linux-amd64
+      dst: cni-nftables-firewall
+    - src: cni-nftables-portmap.linux-amd64
+      dst: cni-nftables-portmap

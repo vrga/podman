@@ -27,8 +27,8 @@ def test_container_basics(host: Host):
 
 def test_httpd_container(host: Host):
     with host.sudo():
-        host.run_expect([0], 'podman image pull docker.io/httpd:2.4.39')
-        host.run_expect([0], 'podman container create --name httpd-test -p 127.0.0.1:8080:80 httpd:2.4.39')  # noqa E501
+        host.run_expect([0], 'podman image pull docker.io/httpd:latest')
+        host.run_expect([0], 'podman container create --name httpd-test -p 127.0.0.1:8080:80 httpd:latest')  # noqa E501
         host.run_expect([0], 'podman container start httpd-test')
     host.run_expect([0], 'sleep 2')
 
