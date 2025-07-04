@@ -47,6 +47,10 @@ cni_networking:
         - type: firewall
         - type: tuning
 
+netavark_networking: []
+
+podman_networking: cni
+
 storage_root:               "/var/lib/containers/storage/"
 storage_driver:             overlay
 install_buildah:            false

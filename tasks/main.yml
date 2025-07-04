@@ -68,6 +68,20 @@
     group: root
     mode:  '0644'
   with_items: "{{ cni_networking }}"
+  when: podman_networking is "cni"
+  tags:
+    - podman
+    - configure
+
+- name: set up netavark networking configs
+  copy:
+    dest:    "/etc/containers/networks/{{ item.filename }}.json"
+    content: "{{ item.data | to_nice_json }}"
+    owner:   root
+    group:   root
+    mode:    '0644'
+  with_items: "{{ netavark_networking }}"
+  when:       podman_networking is "netavark"
   tags:
     - podman
     - configure
