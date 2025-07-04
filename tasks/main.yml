@@ -68,7 +68,7 @@
     group: root
     mode:  '0644'
   with_items: "{{ cni_networking }}"
-  when: podman_networking is "cni"
+  when: podman_networking == "cni"
   tags:
     - podman
     - configure
@@ -81,7 +81,7 @@
     group:   root
     mode:    '0644'
   with_items: "{{ netavark_networking }}"
-  when:       podman_networking is "netavark"
+  when:       podman_networking == "netavark"
   tags:
     - podman
     - configure
