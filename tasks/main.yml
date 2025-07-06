@@ -75,7 +75,7 @@
 
 - name: set up netavark networking configs
   copy:
-    dest:    "/etc/containers/networks/{{ item.filename }}.json"
+    dest:    "/etc/containers/networks/{{ item.data.name }}.json"
     content: "{{ item.data | to_nice_json }}"
     owner:   root
     group:   root
