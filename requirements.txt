@@ -3,5 +3,5 @@ molecule
 molecule-vagrant
 python-vagrant
 pytest-testinfra
-jmespath~=1.0.1
+jmespath~=1.1.0
 pytomlpp~=1.1.0
